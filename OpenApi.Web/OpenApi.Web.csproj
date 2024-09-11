@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+    <!--
+    This project host the controller infrastructure used for integration tests
+    It exposes an OpenApi document for both Swashbuckle and Microsoft implementation
+    
+    Currently the Microsoft implementation is a copy of the Swashbuckle implementation while we wait for something more stable from .NET9
+    -->
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0-rc.1.24452.1"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.1.24452.1" />
+    </ItemGroup>
+
+</Project>
