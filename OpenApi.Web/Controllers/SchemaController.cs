@@ -3,16 +3,31 @@
 namespace OpenApi.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("Test")]
     [Produces("application/json")]
     public class SchemaController : ControllerBase
     {
-        [HttpGet(Name = "Echo")]
+        [HttpGet("echo", Name = "Echo")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EchoData))]
         public IActionResult GetString([FromBody] EchoData body)
         {
             return Ok(body);
         }
+
+        [HttpGet("topic", Name = "Topic")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Topic))]
+        public IActionResult GetTopic()
+        {
+            return Ok(new Topic());
+        }
+
+        [HttpGet("address", Name = "Addresses")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Address>))]
+        public IActionResult GetAddresses()
+        {
+            return Ok(new List<Address>());
+        }
+
     }
 
     public class EchoData
@@ -23,12 +38,13 @@ namespace OpenApi.Web.Controllers
     public class EchoData2
     {
         public EchoData3? Level3 { get; set; }
+        public Topic? MyProperty { get; set; }
     }
 
     public class EchoData3
     {
         public string Something { get; set; } = default!;
-        public Topic? Topic { get; set; }
+        public Topic? TopicTest { get; set; }
         public Customer? Customer { get; set; }
     }
 
@@ -36,6 +52,7 @@ namespace OpenApi.Web.Controllers
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
+        public TopicType Type { get; set; }
     }
 
     public class Customer
@@ -48,5 +65,11 @@ namespace OpenApi.Web.Controllers
     {
         public string? Street { get; set; }
         public string? City { get; set; }
+    }
+
+    public enum TopicType
+    {
+        Public,
+        Private
     }
 }

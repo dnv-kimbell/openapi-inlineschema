@@ -1,4 +1,8 @@
-﻿namespace OpenApi.Web
+﻿using Microsoft.AspNetCore.OpenApi;
+using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
+
+namespace OpenApi.Web
 {
 #pragma warning disable CA1052 // Static holder types should be Static or NotInheritable
     // used by tests
@@ -14,6 +18,16 @@
             builder.Services.AddOpenApi("Microsoft", o =>
             {
                 o.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
+                o.AddSchemaTransformer<SchemaTransformer>();
+                o.AddDocumentTransformer<DocumentTransformer>();
+            });
+            builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+            {
+                options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+            builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
             var app = builder.Build();
@@ -34,5 +48,22 @@
             app.MapControllers();
             app.Run();
         }
+    }
+}
+
+public class SchemaTransformer : IOpenApiSchemaTransformer
+{
+    public async Task TransformAsync(OpenApiSchema schema, OpenApiSchemaTransformerContext context, CancellationToken cancellationToken)
+    {
+
+        await Task.CompletedTask;
+    }
+}
+
+public class DocumentTransformer : IOpenApiDocumentTransformer
+{
+    public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;
     }
 }
