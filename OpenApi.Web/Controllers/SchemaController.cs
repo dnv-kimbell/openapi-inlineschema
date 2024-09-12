@@ -22,7 +22,6 @@ namespace OpenApi.Web.Controllers
 
     public class EchoData2
     {
-        public Customer? Customer { get; set; }
         public EchoData3? Level3 { get; set; }
     }
 
@@ -30,6 +29,7 @@ namespace OpenApi.Web.Controllers
     {
         public string Something { get; set; } = default!;
         public Topic? Topic { get; set; }
+        public Customer? Customer { get; set; }
     }
 
     public class Topic
@@ -41,6 +41,12 @@ namespace OpenApi.Web.Controllers
     public class Customer
     {
         public string Name { get; set; } = default!;
-        public string Address { get; set; } = default!;
+        public Address Address { get; set; } = default!;
+    }
+
+    public class Address
+    {
+        public string? Street { get; set; }
+        public string? City { get; set; }
     }
 }
