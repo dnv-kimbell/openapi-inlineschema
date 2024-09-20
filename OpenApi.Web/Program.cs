@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.OpenApi;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -19,7 +20,7 @@ namespace OpenApi.Web
             builder.Services.AddOpenApi("Microsoft", o =>
             {
                 o.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
-                //o.AddSchemaTransformer<SchemaTransformer>();
+                o.AddSchemaTransformer<EnumFlagsTransformer>();
                 //o.AddDocumentTransformer<DocumentTransformer>();
                 //o.AddOperationTransformer<OperationTransformer>();
             });
@@ -53,12 +54,25 @@ namespace OpenApi.Web
     }
 }
 
-public class SchemaTransformer : IOpenApiSchemaTransformer
+public class EnumFlagsTransformer : IOpenApiSchemaTransformer
 {
     public Task TransformAsync(OpenApiSchema schema, OpenApiSchemaTransformerContext context, CancellationToken cancellationToken)
     {
-        //Hacks.AddSchema(schema, context.ApplicationServices, context.DocumentName);
-        
+        var type = context.JsonTypeInfo.Type;
+        if (type.IsEnum)
+        {
+            var flags = type.GetCustomAttribute<FlagsAttribute>();
+            if (flags is not null)
+            {
+                var values = Enum.GetValues(type);
+
+                foreach (var e in values)
+                {
+                    schema.Enum.Add(new OpenApiString(e.ToString()));
+                }
+            }
+        }
+
         return Task.CompletedTask;
     }
 }
