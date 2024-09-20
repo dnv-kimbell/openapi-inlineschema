@@ -19,9 +19,9 @@ namespace OpenApi.Web
             builder.Services.AddOpenApi("Microsoft", o =>
             {
                 o.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
-                o.AddSchemaTransformer<SchemaTransformer>();
-                o.AddDocumentTransformer<DocumentTransformer>();
-                o.AddOperationTransformer<OperationTransformer>();
+                //o.AddSchemaTransformer<SchemaTransformer>();
+                //o.AddDocumentTransformer<DocumentTransformer>();
+                //o.AddOperationTransformer<OperationTransformer>();
             });
             builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
             {

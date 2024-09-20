@@ -11,11 +11,12 @@
     
     Currently the Microsoft implementation is a copy of the Swashbuckle implementation while we wait for something more stable from .NET9
     -->
+	<!-- OpenApi.Web depends on Microsoft.AspNetCore.OpenApi (>= 9.0.0-rc.2) but Microsoft.AspNetCore.OpenApi 9.0.0-rc.2 was not found. Microsoft.AspNetCore.OpenApi 9.0.0-rc.2.24420.8 was resolved instead.-->
     
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.0-rc.1.24452.1"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.1.24452.1" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.2.24469.4" />
     </ItemGroup>
 
 </Project>
